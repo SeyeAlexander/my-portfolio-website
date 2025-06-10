@@ -6,6 +6,11 @@ export const Route = createFileRoute("/")({
   component: HomePage,
 });
 
+/**
+ * Renders the homepage layout with personal information, a brief description, navigation items, and a GitHub icon button.
+ *
+ * The component displays a two-column structure: the left column contains the name, title, description, navigation labels, and a styled button with a GitHub logo; the right column is reserved for future content.
+ */
 function HomePage() {
   return (
     <div className='flex w-full min-h-[100svh] bg-slate-900 p-20 2xl:container'>
