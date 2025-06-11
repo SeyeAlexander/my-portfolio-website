@@ -8,6 +8,8 @@ import { experiences, projects } from "@/lib/data";
 import MainHeader from "@/components/main/main-header";
 import MainFooter from "@/components/main/main-footer";
 import { ModeToggle } from "@/components/mode-toggle";
+import { SpotlightToggle } from "@/components/spotlight-toggle";
+import { useTheme } from "@/components/theme-provider";
 
 export const Route = createFileRoute("/")({
   component: HomePage,
@@ -19,10 +21,18 @@ export const Route = createFileRoute("/")({
  * The component displays a two-column structure: the left column contains the name, title, description, navigation labels, and a styled button with a GitHub logo; the right column is reserved for future content.
  */
 function HomePage() {
+  const { theme } = useTheme();
   const [activeSection, setActiveSection] = useState("about");
   const observer = useRef<IntersectionObserver | null>(null);
   const spotlightRef = useRef<HTMLDivElement>(null);
   const [isMounted, setIsMounted] = useState(false);
+  const [spotlightActive, setSpotlightActive] = useState(true);
+
+  useEffect(() => {
+    if (theme === "light") {
+      setSpotlightActive(false);
+    }
+  }, [theme]);
 
   // Set isMounted to true after component mounts
   useEffect(() => {
@@ -31,7 +41,12 @@ function HomePage() {
   }, []);
 
   useEffect(() => {
-    if (!isMounted) return;
+    if (!isMounted || !spotlightActive) {
+      if (spotlightRef.current) {
+        spotlightRef.current.style.background = "none";
+      }
+      return;
+    }
 
     const handleMouseMove = (event: MouseEvent) => {
       if (spotlightRef.current) {
@@ -47,7 +62,7 @@ function HomePage() {
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
     };
-  }, [isMounted]);
+  }, [isMounted, spotlightActive]);
 
   useEffect(() => {
     if (!isMounted) return;
@@ -77,26 +92,31 @@ function HomePage() {
 
   return (
     <div className='min-h-screen  text-foreground leading-relaxed antialiased selection:bg-teal-300 selection:text-teal-900'>
-      <div className=''>
-        {/* <div
+      <div className='relative'>
+        <div
           ref={spotlightRef}
-          className='pointer-events-none hidden md:block  fixed inset-0 z-30 transition duration-300 md:absolute'
+          className={`pointer-events-none hidden md:block fixed inset-0 z-30 transition duration-300 md:absolute ${
+            spotlightActive ? "" : "hidden"
+          }`}
           style={isMounted ? {} : { background: "none" }}
-        ></div> */}
+        ></div>
         <div className='mx-auto relative min-h-screen w-full md:max-w-(--breakpoint-2xl) py-12 font-sans px-10 md:px-12 md:py-20 xl:px-32 lg:py-0'>
           <div className='lg:flex lg:justify-between lg:gap-4'>
-            <div className='absolute top-6 right-6 z-50'>
+            <div className='absolute top-6 right-6 z-50 flex flex-col items-center space-y-2'>
               <ModeToggle />
             </div>
 
             <MainHeader activeSection={activeSection} isMounted={isMounted} />
 
-            <main id='content' className='pt-16 md:pt-24 lg:w-1/2 lg:pt-24 lg:pb-20'>
+            <main
+              id='content'
+              className={`pt-16 md:pt-24 lg:w-1/2 lg:pt-24 lg:pb-20 transition-all duration-500 ease-in-out ${
+                isMounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+              }`}
+            >
               <section
                 id='about'
-                className={`mb-16 scroll-mt-16 md:mb-24 lg:mb-20 lg:scroll-mt-24 transition-all duration-700 ease-in-out ${
-                  isMounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-                }`}
+                className='mb-16 scroll-mt-16 md:mb-24 lg:mb-20 lg:scroll-mt-24'
                 aria-label='About me'
               >
                 <AboutSection />
@@ -174,6 +194,14 @@ function HomePage() {
             </main>
           </div>
         </div>
+        {theme === "dark" && (
+          <div className='fixed bottom-6 right-6 z-50'>
+            <SpotlightToggle
+              isActive={spotlightActive}
+              onClick={() => setSpotlightActive(!spotlightActive)}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

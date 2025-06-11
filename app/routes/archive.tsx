@@ -4,14 +4,24 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowUpRight, ArrowLeft } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { ModeToggle } from "@/components/mode-toggle";
+import { SpotlightToggle } from "@/components/spotlight-toggle";
+import { useTheme } from "@/components/theme-provider";
 
 export const Route = createFileRoute("/archive")({
   component: ArchivePage,
 });
 
 function ArchivePage() {
+  const { theme } = useTheme();
   const spotlightRef = useRef<HTMLDivElement>(null);
   const [isMounted, setIsMounted] = useState(false);
+  const [spotlightActive, setSpotlightActive] = useState(true);
+
+  useEffect(() => {
+    if (theme === "light") {
+      setSpotlightActive(false);
+    }
+  }, [theme]);
 
   // Set isMounted to true after component mounts
   useEffect(() => {
@@ -20,7 +30,12 @@ function ArchivePage() {
   }, []);
 
   useEffect(() => {
-    if (!isMounted) return;
+    if (!isMounted || !spotlightActive) {
+      if (spotlightRef.current) {
+        spotlightRef.current.style.background = "none";
+      }
+      return;
+    }
 
     const handleMouseMove = (event: MouseEvent) => {
       if (spotlightRef.current) {
@@ -36,17 +51,23 @@ function ArchivePage() {
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
     };
-  }, [isMounted]);
+  }, [isMounted, spotlightActive]);
 
   return (
     <div className='relative  font-sans text-slate-300'>
-      {/* <div
+      <div
         ref={spotlightRef}
-        className='pointer-events-none hidden md:block fixed inset-0 z-30 transition duration-300 md:absolute'
+        className={`pointer-events-none hidden md:block fixed inset-0 z-30 transition duration-300 md:absolute ${
+          spotlightActive ? "" : "hidden"
+        }`}
         style={isMounted ? {} : { background: "none" }}
-      ></div> */}
-      <div className='mx-auto relative min-h-screen w-full md:max-w-(--breakpoint-2xl) px-10 py-12 font-sans md:px-12 md:py-20 xl:px-32 lg:pt-24 lg:pb-20'>
-        <div className='absolute top-6 right-6 z-50'>
+      ></div>
+      <div
+        className={`mx-auto relative min-h-screen w-full md:max-w-(--breakpoint-2xl) px-10 py-12 font-sans md:px-12 md:py-20 xl:px-32 lg:pt-24 lg:pb-20 transition-all duration-500 ease-in-out ${
+          isMounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+        }`}
+      >
+        <div className='absolute top-6 right-6 z-50 flex flex-col items-center space-y-2'>
           <ModeToggle />
         </div>
         <header className='mb-16'>
@@ -109,6 +130,14 @@ function ArchivePage() {
           </div>
         </div>
       </div>
+      {theme === "dark" && (
+        <div className='fixed bottom-6 right-6 z-50'>
+          <SpotlightToggle
+            isActive={spotlightActive}
+            onClick={() => setSpotlightActive(!spotlightActive)}
+          />
+        </div>
+      )}
     </div>
   );
 }
