@@ -92,7 +92,7 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
   `;
 
   return (
-    <html lang='en' suppressHydrationWarning>
+    <html lang='en' className='dark' suppressHydrationWarning>
       <head suppressHydrationWarning>
         <HeadContent />
         <script dangerouslySetInnerHTML={{ __html: blockingThemeScript }} />

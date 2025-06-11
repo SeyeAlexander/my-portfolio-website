@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect, useRef } from "react";
 import { ArrowUpRight } from "lucide-react";
 import AboutSection from "@/components/main/about";
@@ -91,7 +91,7 @@ function HomePage() {
   }, [isMounted]);
 
   return (
-    <div className='min-h-screen  text-foreground leading-relaxed antialiased selection:bg-teal-300 selection:text-teal-900'>
+    <div className='min-h-screen text-foreground leading-relaxed antialiased selection:bg-teal-300 selection:text-teal-900'>
       <div className='relative'>
         <div
           ref={spotlightRef}
@@ -178,15 +178,15 @@ function HomePage() {
                   </ul>
 
                   <div className='mt-12'>
-                    <a
-                      href='/archive'
+                    <Link
+                      to='/archive'
                       className='inline-flex items-baseline font-medium leading-tight text-slate-900 dark:text-slate-200 hover:text-indigo-600 dark:hover:text-indigo-400 focus-visible:text-indigo-300 group/link text-base'
                     >
                       <span>
                         View Projects Archive
                         <ArrowUpRight className='inline-block h-4 w-4 shrink-0 ease-in-out duration-200 transition-transform group-hover/link:-translate-y-1 group-hover/link:translate-x-1 group-focus-visible/link:-translate-y-1 group-focus-visible/link:translate-x-1 motion-reduce:transition-none ml-1 translate-y-px' />
                       </span>
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </section>

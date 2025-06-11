@@ -54,7 +54,7 @@ function ArchivePage() {
   }, [isMounted, spotlightActive]);
 
   return (
-    <div className='relative  font-sans text-slate-300'>
+    <div className='relative font-sans text-slate-300'>
       <div
         ref={spotlightRef}
         className={`pointer-events-none hidden md:block fixed inset-0 z-30 transition duration-300 md:absolute ${
@@ -83,7 +83,7 @@ function ArchivePage() {
           </h1>
         </header>
         <div className='w-full'>
-          <div className='sticky top-6 z-10 hidden md:grid grid-cols-12 gap-4 p-4 text-sm font-semibold text-slate-900 dark:text-slate-400 border-b border-slate-900 dark:border-slate-800  drake:bg-slate-900/75 backdrop-blur-sm'>
+          <div className='sticky top-6 z-10 hidden md:grid grid-cols-12 gap-4 p-4 text-sm font-semibold text-slate-900 dark:text-slate-400 border-b border-slate-900 dark:border-slate-800  dark:bg-slate-900/75 backdrop-blur-sm'>
             <div className='col-span-1'>Year</div>
             <div className='col-span-3'>Project</div>
             <div className='col-span-2'>Made at</div>
