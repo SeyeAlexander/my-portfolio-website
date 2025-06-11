@@ -10,10 +10,10 @@ const NavLink: React.FC<NavLinkProps> = ({ href, isActive, children }) => {
   const childText = children?.toString().toLowerCase();
 
   const iconClasses = `transition-colors duration-300 ${
-    isActive ? "text-slate-200" : "text-slate-400 group-hover:text-slate-200"
+    isActive ? "text-slate-200 " : "text-slate-500 group-hover:text-slate-200"
   }`;
   const textClasses = `text-sm tracking-widest transition-colors duration-300 ${
-    isActive ? "text-slate-200" : "text-slate-500 group-hover:text-slate-200"
+    isActive ? "text-slate-200 " : "text-slate-500 group-hover:text-slate-200"
   }`;
 
   const getIcon = () => {

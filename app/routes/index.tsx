@@ -16,8 +16,17 @@ function HomePage() {
   const [activeSection, setActiveSection] = useState("about");
   const observer = useRef<IntersectionObserver | null>(null);
   const spotlightRef = useRef<HTMLDivElement>(null);
+  const [isMounted, setIsMounted] = useState(false);
+
+  // Set isMounted to true after component mounts
+  useEffect(() => {
+    setIsMounted(true);
+    return () => setIsMounted(false);
+  }, []);
 
   useEffect(() => {
+    if (!isMounted) return;
+
     const handleMouseMove = (event: MouseEvent) => {
       if (spotlightRef.current) {
         const { clientX, clientY } = event;
@@ -32,9 +41,11 @@ function HomePage() {
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
     };
-  }, []);
+  }, [isMounted]);
 
   useEffect(() => {
+    if (!isMounted) return;
+
     const observerOptions = {
       rootMargin: "0px 0px -80% 0px",
     };
@@ -56,14 +67,15 @@ function HomePage() {
         observer.current?.unobserve(section);
       });
     };
-  }, []);
+  }, [isMounted]);
 
   return (
-    <div className='bg-slate-900 leading-relaxed text-slate-400 antialiased selection:bg-teal-300 selection:text-teal-900'>
+    <div className='min-h-screen bg-slate-900  text-foreground leading-relaxed antialiased selection:bg-teal-300 selection:text-teal-900'>
       <div className='relative'>
         <div
           ref={spotlightRef}
           className='pointer-events-none hidden md:block  fixed inset-0 z-30 transition duration-300 md:absolute'
+          style={isMounted ? {} : { background: "none" }}
         ></div>
         <div className='mx-auto min-h-screen w-full md:max-w-screen-2xl py-12 font-sans px-10 md:px-12 md:py-20 xl:px-32 lg:py-0'>
           <div className='lg:flex lg:justify-between lg:gap-4'>
@@ -97,7 +109,7 @@ function HomePage() {
                   </a>
                 </div>
 
-                <div className='sticky top-0 z-20 -mx-6 mb-4 w-screen bg-slate-900/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0'>
+                <div className='sticky top-0 z-20 -mx-6 mb-4 w-screen bg-background/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0'>
                   <h2 className='text-sm font-bold uppercase tracking-widest text-slate-200 lg:sr-only'>
                     Experience
                   </h2>
@@ -119,7 +131,7 @@ function HomePage() {
                 className='mb-16 scroll-mt-16 md:mb-24 lg:mb-20 lg:scroll-mt-20'
                 aria-label='Selected projects'
               >
-                <div className='sticky top-0 z-20 -mx-6 mb-4 w-screen bg-slate-900/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0'>
+                <div className='sticky top-0 z-20 -mx-6 mb-4 w-screen bg-background/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0'>
                   <h2 className='text-sm font-bold uppercase tracking-widest text-slate-200 lg:sr-only'>
                     Projects
                   </h2>

@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { archiveProjects } from "@/lib/data";
 import { Badge } from "@/components/ui/badge";
 import { ArrowUpRight, ArrowLeft } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export const Route = createFileRoute("/archive")({
   component: ArchivePage,
@@ -10,8 +10,17 @@ export const Route = createFileRoute("/archive")({
 
 function ArchivePage() {
   const spotlightRef = useRef<HTMLDivElement>(null);
+  const [isMounted, setIsMounted] = useState(false);
+
+  // Set isMounted to true after component mounts
+  useEffect(() => {
+    setIsMounted(true);
+    return () => setIsMounted(false);
+  }, []);
 
   useEffect(() => {
+    if (!isMounted) return;
+
     const handleMouseMove = (event: MouseEvent) => {
       if (spotlightRef.current) {
         const { clientX, clientY } = event;
@@ -26,13 +35,14 @@ function ArchivePage() {
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
     };
-  }, []);
+  }, [isMounted]);
 
   return (
-    <div className='relative bg-slate-900 font-sans text-slate-300'>
+    <div className='relative  font-sans text-slate-300'>
       <div
         ref={spotlightRef}
         className='pointer-events-none hidden md:block fixed inset-0 z-30 transition duration-300 md:absolute'
+        style={isMounted ? {} : { background: "none" }}
       ></div>
       <div className='mx-auto min-h-screen w-full md:max-w-screen-2xl px-10 py-12 font-sans md:px-12 md:py-20 xl:px-32 lg:pt-24 lg:pb-20'>
         <header className='mb-16'>
