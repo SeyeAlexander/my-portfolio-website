@@ -9,11 +9,15 @@ type NavLinkProps = {
 const NavLink: React.FC<NavLinkProps> = ({ href, isActive, children }) => {
   const childText = children?.toString().toLowerCase();
 
-  const iconClasses = `transition-colors duration-300 ${
-    isActive ? "text-slate-200 " : "text-slate-500 group-hover:text-slate-200"
+  const iconClasses = `transition-all duration-300 ease-in-out ${
+    isActive
+      ? "text-slate-900 dark:text-slate-200 translate-x-2 "
+      : "text-slate-500 group-hover:text-slate-900 dark:group-hover:text-slate-200"
   }`;
-  const textClasses = `text-sm tracking-widest transition-colors duration-300 ${
-    isActive ? "text-slate-200 " : "text-slate-500 group-hover:text-slate-200"
+  const textClasses = `text-sm tracking-widest transition-all duration-300 ease-in-out ${
+    isActive
+      ? "text-slate-900 dark:text-slate-200 translate-x-2 "
+      : "text-slate-500 group-hover:text-slate-900 dark:group-hover:text-slate-200"
   }`;
 
   const getIcon = () => {
@@ -59,7 +63,7 @@ const NavLink: React.FC<NavLinkProps> = ({ href, isActive, children }) => {
   return (
     <a
       href={href}
-      className='group flex items-center cursor-default gap-2 py-2 transition-all duration-300 ease-in-out active:scale-[.96] hover:translate-x-2'
+      className={`group flex items-center cursor-default gap-2 py-2 transition-all duration-300 ease-in-out active:scale-[.96] ${!isActive ? "hover:translate-x-2" : ""}`}
     >
       {getIcon()}
       <span className={textClasses}>{children}</span>

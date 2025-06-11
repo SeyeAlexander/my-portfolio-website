@@ -26,7 +26,6 @@ export const Route = createRootRoute({
       {
         rel: "stylesheet",
         href: appCss,
-        suppressHydrationWarning: true,
       },
     ],
   }),
@@ -61,9 +60,11 @@ export const Route = createRootRoute({
  */
 function RootComponent() {
   return (
-    <RootDocument>
-      <Outlet />
-    </RootDocument>
+    <ThemeProvider defaultTheme='dark' storageKey='vite-ui-theme'>
+      <RootDocument>
+        <Outlet />
+      </RootDocument>
+    </ThemeProvider>
   );
 }
 
@@ -73,13 +74,31 @@ function RootComponent() {
  * @param children - The content to be rendered inside the document's body, typically nested routes.
  */
 function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
+  const blockingThemeScript = `
+    (function() {
+      try {
+        const theme = localStorage.getItem('vite-ui-theme') || 'dark';
+        const root = document.documentElement;
+        if (theme === 'system') {
+          const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          root.classList.add(systemTheme);
+        } else {
+          root.classList.add(theme);
+        }
+      } catch (e) {
+        console.error("Error in theme script", e);
+      }
+    })();
+  `;
+
   return (
     <html lang='en' suppressHydrationWarning>
       <head suppressHydrationWarning>
         <HeadContent />
+        <script dangerouslySetInnerHTML={{ __html: blockingThemeScript }} />
       </head>
       <body
-        className='bg-slate-900 leading-relaxed text-slate-400  antialiased selection:bg-teal-300 selection:text-teal-900'
+        className='leading-relaxed bg-[#E7DDC6] dark:bg-slate-900  text-slate-400 antialiased selection:bg-teal-300 selection:text-teal-900'
         suppressHydrationWarning
       >
         {children}

@@ -7,6 +7,7 @@ import ProjectCard from "@/components/main/project-card";
 import { experiences, projects } from "@/lib/data";
 import MainHeader from "@/components/main/main-header";
 import MainFooter from "@/components/main/main-footer";
+import { ModeToggle } from "@/components/mode-toggle";
 
 export const Route = createFileRoute("/")({
   component: HomePage,
@@ -75,21 +76,27 @@ function HomePage() {
   }, [isMounted]);
 
   return (
-    <div className='min-h-screen bg-slate-900  text-foreground leading-relaxed antialiased selection:bg-teal-300 selection:text-teal-900'>
-      <div className='relative'>
-        <div
+    <div className='min-h-screen  text-foreground leading-relaxed antialiased selection:bg-teal-300 selection:text-teal-900'>
+      <div className=''>
+        {/* <div
           ref={spotlightRef}
           className='pointer-events-none hidden md:block  fixed inset-0 z-30 transition duration-300 md:absolute'
           style={isMounted ? {} : { background: "none" }}
-        ></div>
-        <div className='mx-auto min-h-screen w-full md:max-w-screen-2xl py-12 font-sans px-10 md:px-12 md:py-20 xl:px-32 lg:py-0'>
+        ></div> */}
+        <div className='mx-auto relative min-h-screen w-full md:max-w-(--breakpoint-2xl) py-12 font-sans px-10 md:px-12 md:py-20 xl:px-32 lg:py-0'>
           <div className='lg:flex lg:justify-between lg:gap-4'>
-            <MainHeader activeSection={activeSection} />
+            <div className='absolute top-6 right-6 z-50'>
+              <ModeToggle />
+            </div>
+
+            <MainHeader activeSection={activeSection} isMounted={isMounted} />
 
             <main id='content' className='pt-16 md:pt-24 lg:w-1/2 lg:pt-24 lg:pb-20'>
               <section
                 id='about'
-                className='mb-16 scroll-mt-16 md:mb-24 lg:mb-20 lg:scroll-mt-24'
+                className={`mb-16 scroll-mt-16 md:mb-24 lg:mb-20 lg:scroll-mt-24 transition-all duration-700 ease-in-out ${
+                  isMounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                }`}
                 aria-label='About me'
               >
                 <AboutSection />
@@ -105,7 +112,7 @@ function HomePage() {
                     href='https://drive.google.com/file/d/1fem6meDrWDGHMQ0nuL5MqodLnUWQ_f9L/view?usp=drive_link'
                     target='_blank'
                     rel='noreferrer noopener'
-                    className='inline-flex items-baseline font-medium leading-tight text-slate-200 hover:text-indigo-400 focus-visible:text-indigo-300 group/link text-base'
+                    className='inline-flex items-baseline font-medium leading-tight text-slate-900 dark:text-slate-200 hover:text-indigo-600 dark:hover:text-indigo-400 focus-visible:text-indigo-300 group/link text-base'
                   >
                     <span>
                       View Résumé
@@ -153,7 +160,7 @@ function HomePage() {
                   <div className='mt-12'>
                     <a
                       href='/archive'
-                      className='inline-flex items-baseline font-medium leading-tight text-slate-200 hover:text-indigo-400 focus-visible:text-indigo-300 group/link text-base'
+                      className='inline-flex items-baseline font-medium leading-tight text-slate-900 dark:text-slate-200 hover:text-indigo-600 dark:hover:text-indigo-400 focus-visible:text-indigo-300 group/link text-base'
                     >
                       <span>
                         View Projects Archive

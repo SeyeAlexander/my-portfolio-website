@@ -1,27 +1,34 @@
 import NavLink from "@/components/main/nav-link";
-import { ModeToggle } from "../mode-toggle";
+import { Github, Linkedin, Twitter, InstagramIcon, Codepen, ExternalLink } from "lucide-react";
 
 type MainHeaderProps = {
   activeSection: string;
+  isMounted: boolean;
 };
 
-const MainHeader = ({ activeSection }: MainHeaderProps) => {
+const MainHeader = ({ activeSection, isMounted }: MainHeaderProps) => {
   return (
     <header className='lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-1/2 lg:flex-col lg:justify-between lg:pt-24 lg:pb-20'>
-      <div>
-        <h1 className='text-4xl font-bold tracking-tight text-slate-200 sm:text-5xl'>
-          Alexander Ojubanire
-        </h1>
-        <h2 className='mt-3 text-lg font-medium tracking-tight text-slate-200 sm:text-xl'>
-          Software Engineer
-        </h2>
-        <p className='mt-4 max-w-xs leading-normal text-[15px] text-slate-400'>
+      <div
+        className={`transition-all duration-700 ease-in-out ${
+          isMounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+        }`}
+      >
+        <div>
+          <h1 className='text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-200 sm:text-5xl'>
+            <a href='/'>Alexander Ojubanire</a>
+          </h1>
+          <h2 className='mt-3 text-lg font-medium tracking-tight text-slate-900 dark:text-slate-200 sm:text-xl'>
+            Software Engineer
+          </h2>
+        </div>
+        <p className='mt-4 max-w-xs leading-normal text-[15px] text-slate-700 dark:text-slate-400'>
           Experienced Software Engineer focused on building high-impact products and tools for a
           global user base.
         </p>
 
         <nav className='nav hidden gap-6 lg:block' aria-label='In-page jump links'>
-          <ul className='mt-16  w-max'>
+          <ul className='mt-16 font-medium w-max'>
             <li>
               <NavLink href='#about' isActive={activeSection === "about"}>
                 About
@@ -40,13 +47,14 @@ const MainHeader = ({ activeSection }: MainHeaderProps) => {
           </ul>
         </nav>
       </div>
+
       <ul className='ml-1 mt-8 flex items-center' aria-label='Social media'>
         <li className='mr-5 shrink-0'>
           <a
             href='https://github.com/SeyeAlexander'
             target='_blank'
             rel='noreferrer noopener'
-            className='block text-slate-400  hover:text-slate-200'
+            className='block text-slate-600 dark:text-slate-400  hover:text-slate-900 dark:hover:text-slate-200'
           >
             <span className='sr-only'>GitHub</span>
             <svg width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
@@ -62,7 +70,7 @@ const MainHeader = ({ activeSection }: MainHeaderProps) => {
             href='https://www.linkedin.com/in/alexander-ojubanire-438284241/'
             target='_blank'
             rel='noreferrer noopener'
-            className='block text-slate-400  hover:text-slate-200'
+            className='block text-slate-600 dark:text-slate-400  hover:text-slate-900 dark:hover:text-slate-200'
           >
             <span className='sr-only'>LinkedIn</span>
             <svg width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
@@ -81,7 +89,7 @@ const MainHeader = ({ activeSection }: MainHeaderProps) => {
             href='https://x.com/seyeAlexander'
             target='_blank'
             rel='noreferrer noopener'
-            className='block text-slate-400  hover:text-slate-200'
+            className='block text-slate-600 dark:text-slate-400  hover:text-slate-900 dark:hover:text-slate-200'
           >
             <span className='sr-only'>X</span>
             <svg width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
@@ -95,7 +103,7 @@ const MainHeader = ({ activeSection }: MainHeaderProps) => {
         <li className='mr-5 shrink-0'>
           <a
             href='mailto:ojubanirealex@gmail.com'
-            className='block text-slate-400  hover:text-slate-200'
+            className='block text-slate-600 dark:text-slate-400  hover:text-slate-900 dark:hover:text-slate-200'
           >
             <span className='sr-only'>Email</span>
             <svg width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
@@ -106,7 +114,6 @@ const MainHeader = ({ activeSection }: MainHeaderProps) => {
             </svg>
           </a>
         </li>
-        {/* <ModeToggle /> */}
       </ul>
     </header>
   );
