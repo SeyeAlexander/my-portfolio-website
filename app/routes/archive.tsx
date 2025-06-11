@@ -70,7 +70,8 @@ function ArchivePage() {
         <div className='absolute top-6 right-6 z-50 flex flex-col items-center space-y-2'>
           <ModeToggle />
         </div>
-        <header className='mb-16'>
+
+        <header className='mb-16 pt-10 md:pt-0'>
           <Link
             to='/'
             className='group mb-2 inline-flex items-center text-sm font-semibold leading-tight text-indigo-600 dark:text-indigo-400'
@@ -82,6 +83,7 @@ function ArchivePage() {
             Projects Archive
           </h1>
         </header>
+
         <div className='w-full'>
           <div className='sticky top-6 z-10 hidden md:grid grid-cols-12 gap-4 p-4 text-sm font-semibold text-slate-900 dark:text-slate-400 border-b border-slate-900 dark:border-slate-800  dark:bg-slate-900/75 backdrop-blur-sm'>
             <div className='col-span-1'>Year</div>
@@ -131,7 +133,7 @@ function ArchivePage() {
         </div>
       </div>
       {theme === "dark" && (
-        <div className='fixed bottom-6 right-6 z-50'>
+        <div className='fixed bottom-6 right-6 z-50 hidden md:block'>
           <SpotlightToggle
             isActive={spotlightActive}
             onClick={() => setSpotlightActive(!spotlightActive)}
