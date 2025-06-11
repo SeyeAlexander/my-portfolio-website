@@ -59,7 +59,7 @@ const MainHeader = ({ activeSection }: MainHeaderProps) => {
         </li>
         <li className='mr-5 shrink-0'>
           <a
-            href='#'
+            href='https://www.linkedin.com/in/alexander-ojubanire-438284241/'
             target='_blank'
             rel='noreferrer noopener'
             className='block text-slate-400  hover:text-slate-200'
