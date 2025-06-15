@@ -124,7 +124,7 @@ function HomePage() {
 
               <section
                 id='experience'
-                className='mb-16 scroll-mt-16 md:mb-24 lg:mb-32 lg:scroll-mt-20'
+                className='mb-16 scroll-mt-16 md:mb-24 lg:mb-28 lg:scroll-mt-20'
                 aria-label='Work experience'
               >
                 <div className='mb-8'>
