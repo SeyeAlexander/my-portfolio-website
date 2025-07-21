@@ -100,6 +100,7 @@ function HomePage() {
           }`}
           style={isMounted ? {} : { background: "none" }}
         ></div>
+
         <div className='mx-auto relative min-h-screen w-full md:max-w-(--breakpoint-2xl) py-12 font-sans px-10 md:px-12 md:py-20 xl:px-32 lg:py-0'>
           <div className='lg:flex lg:justify-between lg:gap-4'>
             <div className='absolute top-6 right-6 z-50 flex flex-col items-center space-y-2'>
@@ -124,7 +125,7 @@ function HomePage() {
 
               <section
                 id='experience'
-                className='mb-16 scroll-mt-16 md:mb-24 lg:mb-32 lg:scroll-mt-20'
+                className='mb-16 scroll-mt-16 md:mb-24 lg:mb-28 lg:scroll-mt-20'
                 aria-label='Work experience'
               >
                 <div className='mb-8'>
@@ -195,6 +196,7 @@ function HomePage() {
             </main>
           </div>
         </div>
+
         {theme === "dark" && (
           <div className='fixed bottom-6 right-6 z-50 hidden md:block'>
             <SpotlightToggle
